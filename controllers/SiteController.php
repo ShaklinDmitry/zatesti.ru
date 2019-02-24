@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Register;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -124,5 +125,17 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionRegister(){
+        $model = new Register();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save();
+        }
+
+        return $this->render('register',[
+            'model' => $model,
+        ]);
     }
 }

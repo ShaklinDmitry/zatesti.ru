@@ -10,13 +10,10 @@ use yii\db\ActiveRecord;
 class Questions extends ActiveRecord
 {
 
-    public $id;
-
     public function rules()
     {
         return [
-            [['text', 'user_id'], 'safe'],
-         //   ['text','email'],
+            [['text', 'user_id', 'choice0','choice1','choice2','choice3','correct_choice'], 'safe'],
         ];
     }
 

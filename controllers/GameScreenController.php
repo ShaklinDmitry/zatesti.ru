@@ -65,17 +65,13 @@ class GameScreenController extends Controller
     }
 
     public function actionGameScreen(){
-
         $this->model = new Questions();
-        $dataProvider = $this->model->search();
-
-    /*    $model->text = 'Сколько лет Пете?';
-        $model->user_id = 1;
-        $model->save();*/
 
         if($this->model->load(Yii::$app->request->post())){
             $this->model->save();
         }
+
+        $dataProvider = $this->model->search();
 
         $pagesize = $dataProvider->pagination->pageSize;
         $total = $dataProvider->totalCount;
@@ -83,9 +79,18 @@ class GameScreenController extends Controller
 
         return $this->render('questions',
             ['model' => $this->model,
-             'dataProvider' => $dataProvider,
-             'curPage' => $curPage,
+                'dataProvider' => $dataProvider,
+                'curPage' => $curPage,
             ]);
+    }
+
+    public function actionDeleteItem(){
+        if (Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post()['item_id'];
+
+            $customer = Questions::findOne($id);
+            $customer->delete();
+        }
     }
 
     public function actionValidate(){
@@ -104,7 +109,7 @@ class GameScreenController extends Controller
 
             if($this->model->load(Yii::$app->request->post())){
                 $this->model->save();
-            }
+            } 
             return 'Данные успешно сохранены!';
         }
     }
