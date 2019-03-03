@@ -11,14 +11,16 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class LoginForm extends Model
+class LoginForm extends ActiveRecord
 {
-    public $username;
-    public $password;
     public $rememberMe = true;
 
     private $_user = false;
 
+    public static function tableName()
+    {
+        return 'users';
+    }
 
     /**
      * @return array the validation rules.
@@ -47,7 +49,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }

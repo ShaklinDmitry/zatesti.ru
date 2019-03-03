@@ -22,6 +22,12 @@ class Questions extends ActiveRecord
          return 'questions';
      }
 
+     public function getAnswers($id){
+        $questions = Questions::findOne(['id' => $id]);
+
+        return $questions;
+     }
+
      public function search(){
         $query = Questions::find();
 
